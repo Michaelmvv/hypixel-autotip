@@ -1,0 +1,16 @@
+[
+{
+  "modid": "autotip",
+  "name": "Autotip",
+  "description": "Autotipper for mc.hypixel.net. Type /autotip in-game to get started.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Sk1er","2Pi"],
+  "credits": "Sk1er & 2Pi",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
