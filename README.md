@@ -3,4 +3,6 @@ This is the source code for 2PI's 1.8.9 Hypixel autotipper. It's kind of documen
 
 If you want to download the compiled versions in 1.8, 1.8.9, and 1.9, you can get them at www.skywars.info/autotip. They're not obfuscated and are very similar, so you should have no problems porting it to any version you like.
 
+Contact me here if you have any questions or problems: https://hypixel.net/conversations/add?to=2PI
+
 Enjoy :)
