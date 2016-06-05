@@ -35,8 +35,8 @@ public class AutotipMod {
 	@EventHandler
 	public void init(FMLInitializationEvent event) throws IOException {
 		// initialize some shit
-		FMLCommonHandler.instance().bus().register(this);
-		FMLCommonHandler.instance().bus().register(new Listener());
+		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.EVENT_BUS.register(new Listener());
 		ClientCommandHandler.instance.registerCommand(new Command());
 		ClientCommandHandler.instance.registerCommand(new LastTip());
 
