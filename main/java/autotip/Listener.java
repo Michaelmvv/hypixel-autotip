@@ -1,11 +1,11 @@
 package autotip;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Listener {
 	public static boolean lastMsg = false;
@@ -17,27 +17,20 @@ public class Listener {
 		String msg = event.message.getUnformattedText();
 		if (AutotipMod.toggle) {
 			// All the ones below are hiding failed tip messages
-			if (msg.startsWith("You can't tip the same person")) {
+			if (msg.startsWith("You can't tip the same person"))
 				event.setCanceled(true);
-			}
-			if (msg.equals("Still processing your most recent request!")) {
+			if (msg.equals("Still processing your most recent request!"))
 				event.setCanceled(true);
-			}
-			if (msg.startsWith("You've already tipped that person")) {
+			if (msg.startsWith("You've already tipped that person"))
 				event.setCanceled(true);
-			}
-			if (msg.equals("You cannot tip yourself!")) {
+			if (msg.equals("You cannot tip yourself!"))
 				event.setCanceled(true);
-			}
-			if (msg.startsWith("You can only use the /tip command")) {
+			if (msg.startsWith("You can only use the /tip command"))
 				event.setCanceled(true);
-			}
-			if (msg.equals("You are not allowed to use commands as a spectator!")) {
+			if (msg.equals("You are not allowed to use commands as a spectator!"))
 				event.setCanceled(true);
-			}
-			if (msg.equals("Slow down! You can only use /tip every few seconds.")) {
+			if (msg.equals("Slow down! You can only use /tip every few seconds."))
 				event.setCanceled(true);
-			}
 
 			// Parse tip message
 			if (msg.startsWith("You") && msg.contains("tip") && msg.contains(" coins to ") && msg.contains(" in ")) {
@@ -46,7 +39,7 @@ public class Listener {
 				int afterName = msg.indexOf(" in");
 				String name = msg.substring(beforeName, afterName);
 
-				TipCount.addTip(name);
+				TipTracker.addTip(name);
 				// add their name to that little array thing
 
 				AutotipMod.totalTips++; // +1 total tips, and then write that
@@ -54,7 +47,6 @@ public class Listener {
 				try {
 					FileUtil.writeVars();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				System.out.println("Tipped " + name);
@@ -74,14 +66,10 @@ public class Listener {
 				if (totalCoins.containsKey(gametype)) {
 					coinsEarned = totalCoins.get(gametype) + coinsEarned;
 					totalCoins.put(gametype, coinsEarned);
-				} else {
-					totalCoins.put(gametype, coinsEarned);
-				}
+				} else totalCoins.put(gametype, coinsEarned);
 
-				if (!AutotipMod.showTips) { // cancel the message if messages
-											// are turned off
+				if (!AutotipMod.showTips)  // cancel the message if messages are turned off
 					event.setCanceled(true);
-				}
 			}
 
 			// detect karma message
@@ -98,26 +86,22 @@ public class Listener {
 					}
 				}
 			}
-			if (AutotipMod.showTips) { // some other cancelling messages if tips
-										// aren't needed
-			} else {
-				if ((msg.startsWith("+")) && (msg.contains("experience (Gave a player a /tip)"))) {
+			if (!AutotipMod.showTips) {
+				if ((msg.startsWith("+")) && (msg.contains("experience (Gave a player a /tip)")))
 					event.setCanceled(true);
-				}
 				if (msg.startsWith("You") && msg.contains("tip") && msg.contains(" coins to ")
-						&& msg.contains(" in ")) {
+						&& msg.contains(" in "))
 					event.setCanceled(true);
-				}
-
 				// see if they said "gg", in which case the next message will be
 				// +karma and that message shouldn't be canceled by /autotip
 				// messages
-				if (msg.toLowerCase().endsWith("gg") && msg.contains(Minecraft.getMinecraft().thePlayer.getName())) {
+				if (msg.toLowerCase().endsWith("gg") && msg.contains(Minecraft.getMinecraft().thePlayer.getName()))
 					Listener.lastMsg = true;
-				} else {
-					Listener.lastMsg = false;
-				}
+				 else Listener.lastMsg = false;
 
+
+			} else { // some other cancelling messages if tips
+										// aren't needed
 			}
 		} else {
 		}
