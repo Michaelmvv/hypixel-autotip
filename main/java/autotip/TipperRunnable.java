@@ -1,19 +1,18 @@
 package autotip;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
-public class Tipper implements Runnable {
-	public void run() {
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 
+class TipperRunnable implements Runnable {
+	public void run() {
 		// check for new update if it hasn't already checked
 		if (!AutotipMod.tracker) {
 			System.out.println("Autotip Version: " + AutotipMod.VERSION);
@@ -23,13 +22,11 @@ public class Tipper implements Runnable {
 				get = get("http://skywars.info/test/newupdate.php?u=" + Minecraft.getMinecraft().thePlayer.getUniqueID()
 						+ "&v=" + AutotipMod.VERSION);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Boolean version = Boolean.parseBoolean(get);
 			System.out.println("Autotip up to date:" + version);
-			if (!version) // if it's not up to date spam to update
-			{
+			if (!version) { // if it's not up to date spam to update
 				ClickEvent versionCheckChatClickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL,
 						"http://www.skywars.info/autotip");
 				ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(versionCheckChatClickEvent);
@@ -53,22 +50,18 @@ public class Tipper implements Runnable {
 		}
 		// get the current boosters active and put em in a string array
 		System.out.println("Boosters: " + boosters);
-		for (int i = 0; i < boosters.length; i++) {
-			String user = boosters[i];
+		if(boosters == null) boosters = new String[] {};
+		for (String user : boosters) {
 			if (AutotipMod.toggle) {
 				// tip em
 				System.out.println("Attempting to tip " + user);
-				if (AutotipMod.anon) {
+				if (AutotipMod.anon)
 					Minecraft.getMinecraft().thePlayer.sendChatMessage("/tip -a " + user);
-				} else {
-					Minecraft.getMinecraft().thePlayer.sendChatMessage("/tip " + user);
-				}
-
+				else Minecraft.getMinecraft().thePlayer.sendChatMessage("/tip " + user);
 				// wait 4.5 seconds
 				try {
 					Thread.sleep(4500);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

@@ -13,20 +13,16 @@ public class FileUtil {
 	// someone is tipped (for totaltips)
 	public static void writeVars() throws Exception {
 		FileWriter saveFile = new FileWriter("config/autotip.txt");
-
 		saveFile.write(AutotipMod.toggle + "\n");
 		saveFile.write(AutotipMod.showTips + "\n");
 		saveFile.write(AutotipMod.anon + "\n");
 		saveFile.write(AutotipMod.totalTips + "\n");
-
 		saveFile.close();
-
 	}
 
 	// get the stored variables on startup of mc
 	public static void getVars() throws Exception {
 		BufferedReader saveFile = new BufferedReader(new FileReader("config/autotip.txt"));
-
 		AutotipMod.toggle = Boolean.parseBoolean((saveFile.readLine())); // toggle
 		AutotipMod.showTips = Boolean.parseBoolean((saveFile.readLine())); // messages
 		AutotipMod.anon = Boolean.parseBoolean((saveFile.readLine())); // anon
