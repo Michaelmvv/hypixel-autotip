@@ -70,20 +70,20 @@ class TipperRunnable implements Runnable {
 		AutotipMod.runningThread = false;
 	}
 
-	// simple get request, probably breaks sometimes idk
-	public static String get(String url) throws Exception {
-		URL website = new URL(url);
-		URLConnection connection = website.openConnection();
-		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+	// credits to eladkay for the url to string shit that doesn't actually break!!
+	public static String get(String url) throws IOException {
+		URL url2 = new URL(url);
+		URLConnection urlConnection = url2.openConnection();
+		urlConnection.setConnectTimeout(5000);
+		urlConnection.setReadTimeout(5000);
+		BufferedReader breader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
-		StringBuilder response = new StringBuilder();
-		String inputLine;
+		StringBuilder stringBuilder = new StringBuilder();
 
-		while ((inputLine = in.readLine()) != null)
-			response.append(inputLine);
+		String line;
+		while ((line = breader.readLine()) != null) {
+			stringBuilder.append(line);
+		}
 
-		in.close();
-
-		return response.toString();
-	}
+		return stringBuilder.toString();
 }
